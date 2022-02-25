@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src .",
     "forest": "nodemon src/ -q",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +19,8 @@
     "express": "^4.17.3",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "husky": "^7.0.0"
   }
 }
