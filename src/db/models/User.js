@@ -10,8 +10,10 @@ const UserSchema = new Schema({
     required: true,
   },
   birthdate: {
-    type: Date,
-    required: true,
+    type: String,
+  },
+  image: {
+    type: String,
   },
   username: {
     type: String,
@@ -27,6 +29,16 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  friends: [
+    {
+      type: [Schema.Types.ObjectId],
+    },
+  ],
+  enemies: [
+    {
+      type: [Schema.Types.ObjectId],
+    },
+  ],
 });
 
 const User = model("User", UserSchema, "users");
