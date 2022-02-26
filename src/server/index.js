@@ -7,5 +7,5 @@ const app = express();
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use("/login", router);
+app.use("/user", router);
 module.exports = app;
