@@ -12,7 +12,7 @@ const login = async (req, res, next) => {
     if (!username) {
       const error = new Error("Something went wrong");
       debug(chalk.red(`Username not found: ${error}`));
-      res.status(404).json(error.message);
+      res.status(404).json(error);
     } else {
       const passwordComparison = await bcrypt.compare(password, user.password);
 

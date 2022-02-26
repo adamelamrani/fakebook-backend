@@ -10,8 +10,10 @@ const UserSchema = new Schema({
     required: true,
   },
   birthdate: {
-    type: Date,
-    required: true,
+    type: String,
+  },
+  image: {
+    type: String,
   },
   username: {
     type: String,
