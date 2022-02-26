@@ -24,15 +24,16 @@ const login = async (req, res, next) => {
 
 const register = async (req, res, next) => {
   const { username, password, email, birthdate, surname, name } = req.body;
-  const user = await User.findOne({ username });
+  const existingUser = await User.findOne({ username });
+  const existingEmail = await User.findOne({ email });
 
   if (!username || !password || !email || !surname || !name) {
     debug(chalk.red("Missing one or more register requirements"));
     const error = new Error("One or more requirements are missing");
     res.json({ error: error.message });
     next(error);
-  } else if (user) {
-    const error = new Error("User already exists");
+  } else if (existingUser || existingEmail) {
+    const error = new Error("User or e-mail already exists");
     res.status(400).json({ error: error.message });
     debug(chalk.red(`Tried to create an already existing user`));
     next(error);
