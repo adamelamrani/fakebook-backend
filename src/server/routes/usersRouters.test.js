@@ -61,3 +61,44 @@ describe("Given a /user/login endpoint", () => {
     });
   });
 });
+
+describe("Given a /user/register endpoint", () => {
+  describe("When it receives a post method and valid user information", () => {
+    test("Then it should return status 201 and an object with Register property", async () => {
+      const newUser = {
+        username: "nestea",
+        password: "tatoweno",
+        email: "metomoounnestea@lloroconlostests.com",
+        birthdate: "26/02/2022",
+        surname: "No tiene",
+        name: "No es tea",
+      };
+
+      const { body } = await request(app)
+        .post("/user/register")
+        .send(newUser)
+        .expect(201);
+
+      expect(body).toHaveProperty("Register");
+    });
+  });
+
+  describe("When the user already exists in the database", () => {
+    test("Then it should return a status code 400 and an object with property error", async () => {
+      const user = {
+        name: "adam",
+        surname: "el amrani",
+        birthdate: "1991-07-10",
+        username: "adelamco",
+        email: "adam@gmail.com",
+        password: "123456",
+      };
+      const { body } = await request(app)
+        .post("/user/register")
+        .send(user)
+        .expect(400);
+
+      expect(body).toHaveProperty("error");
+    });
+  });
+});
