@@ -2,7 +2,6 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
-const { json } = require("express/lib/response");
 const User = require("../../db/models/User");
 const login = require("./userControllers");
 const connectDatabase = require("../../db");
