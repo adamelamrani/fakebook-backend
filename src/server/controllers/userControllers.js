@@ -22,4 +22,40 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = login;
+const register = async (req, res, next) => {
+  const { username, password, email, birthdate, surname, name } = req.body;
+  const user = await User.findOne({ username });
+
+  if (!username || !password || !email || !surname || !name) {
+    debug(chalk.red("Missing one or more register requirements"));
+    const error = new Error("One or more requirements are missing");
+    res.json({ error: error.message });
+    next(error);
+  } else if (user) {
+    const error = new Error("User already exists");
+    res.status(400).json({ error: error.message });
+    debug(chalk.red(`Tried to create an already existing user`));
+    next(error);
+  } else {
+    try {
+      const saltRounds = 10;
+      const hashPassword = await bcrypt.hash(password, saltRounds);
+      const data = {
+        username,
+        password: hashPassword,
+        email,
+        birthdate,
+        surname,
+        name,
+      };
+      User.create(data);
+      debug(chalk.greenBright(`Created user: ${data.username}`));
+      res.status(201).json({ Register: "Register successfull" });
+    } catch (error) {
+      debug(chalk.red("Something went wrong with register process"));
+      next(error);
+    }
+  }
+};
+
+module.exports = { login, register };
